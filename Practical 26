@@ -1,0 +1,35 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileCount {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java FileCount <filename>");
+            return;
+        }
+
+        int characters = 0, words = 0, lines = 0;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                lines++;
+                characters += line.length();
+
+                String[] wordList = line.trim().split("\\s+");
+                if (!line.trim().isEmpty()) {
+                    words += wordList.length;
+                }
+            }
+
+            System.out.println("Lines: " + lines);
+            System.out.println("Words: " + words);
+            System.out.println("Characters: " + characters);
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
